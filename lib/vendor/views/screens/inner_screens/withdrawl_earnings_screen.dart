@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:uuid/uuid.dart';
 
-class WithdrewEarningsScreen extends StatefulWidget {
+class WithdrawlEarningsScreen extends StatefulWidget {
   @override
-  State<WithdrewEarningsScreen> createState() => _WithdrewEarningsScreenState();
+  State<WithdrawlEarningsScreen> createState() => _WithdrawlEarningsScreenState();
 }
 
-class _WithdrewEarningsScreenState extends State<WithdrewEarningsScreen> {
+class _WithdrawlEarningsScreenState extends State<WithdrawlEarningsScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -28,7 +28,7 @@ class _WithdrewEarningsScreenState extends State<WithdrewEarningsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Withdrew Earnings'),
+        title: Text('Withdraw Earnings'),
         iconTheme: IconThemeData(
           color: Colors.pink,
         ),
@@ -156,11 +156,11 @@ class _WithdrewEarningsScreenState extends State<WithdrewEarningsScreen> {
                         .doc(_auth.currentUser!.uid)
                         .get();
                     if (_formKey.currentState!.validate()) {
-                      final withDrewId = Uuid().v4();
+                      final withDrawId = Uuid().v4();
                       EasyLoading.show();
                       await _firestore
-                          .collection('withdrewal')
-                          .doc(withDrewId)
+                          .collection('withdrawal')
+                          .doc(withDrawId)
                           .set({
                         'businessName': (userDoc.data()
                             as Map<String, dynamic>)['businessName'],

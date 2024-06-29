@@ -23,6 +23,17 @@ class UploadScreen extends StatelessWidget {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
+          centerTitle: true,
+          elevation: 0,
+          // backgroundColor: Colors.yellow.shade900,
+          title: Text(
+            'Upload Products',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 4,
+            ),
+          ),
           bottom: TabBar(
             tabs: [
               Tab(
@@ -92,8 +103,10 @@ class UploadScreen extends StatelessWidget {
                   'vendorId': _auth.currentUser!.uid,
                   'rating': 0,
                   'totalReviews': 0,
+                  'approved': false,
                 }).whenComplete(() {
                   EasyLoading.dismiss();
+                  EasyLoading.showSuccess('Upload Successful!');
                   _productProvider.clearData();
                 });
               } else {

@@ -17,6 +17,11 @@ class VendorMessageScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Messages',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            letterSpacing: 5,
+          ),
         ),
         centerTitle: true,
       ),

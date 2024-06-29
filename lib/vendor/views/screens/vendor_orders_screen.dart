@@ -25,7 +25,13 @@ class VendorOrdersScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Orders',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            letterSpacing: 5,
+          ),
         ),
+        centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: _ordersStream,
@@ -40,7 +46,8 @@ class VendorOrdersScreen extends StatelessWidget {
 
           return ListView(
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
               return Slidable(
                 key: ValueKey(data['orderId']),
                 startActionPane: ActionPane(
@@ -85,21 +92,21 @@ class VendorOrdersScreen extends StatelessWidget {
                       ),
                       title: data['accepted'] == true
                           ? Text(
-                        'Accepted',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                        ),
-                      )
+                              'Accepted',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.blue,
+                              ),
+                            )
                           : Text(
-                        'Not Accepted',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                        ),
-                      ),
+                              'Not Accepted',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.red,
+                              ),
+                            ),
                       trailing: Text(
                         "\$${data['price'].toStringAsFixed(2)}",
                         style: TextStyle(
@@ -136,7 +143,8 @@ class VendorOrdersScreen extends StatelessWidget {
                                 ),
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Text(
                                     'Quantity',

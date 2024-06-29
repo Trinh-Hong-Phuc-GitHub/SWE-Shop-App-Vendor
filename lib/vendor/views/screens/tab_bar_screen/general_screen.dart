@@ -147,7 +147,6 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
                 },
                 maxLines: 10,
                 minLines: 3,
-                maxLength: 800,
                 decoration: InputDecoration(
                   hintText: 'Enter Product Description',
                   labelText: 'Enter Product Description',

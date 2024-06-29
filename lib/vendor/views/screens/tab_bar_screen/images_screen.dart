@@ -96,10 +96,10 @@ class _ImagesScreenState extends State<ImagesScreen>
                           _imageUrlList.add(value);
                         });
                       });
-                      EasyLoading.dismiss();
                     });
-                    _productProvider.getFormData(imageUrlList: _imageUrlList);
                   }
+                  EasyLoading.dismiss();
+                  _productProvider.getFormData(imageUrlList: _imageUrlList);
                 },
                 child: Text('Upload Images'),
               ),

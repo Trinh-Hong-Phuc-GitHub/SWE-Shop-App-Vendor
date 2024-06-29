@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uber_shop_vendor_app/vendor/views/screens/earning_screen.dart';
-import 'package:uber_shop_vendor_app/vendor/views/screens/edit_screen.dart';
+import 'package:uber_shop_vendor_app/vendor/views/screens/edit_product_screen.dart';
 import 'package:uber_shop_vendor_app/vendor/views/screens/logout_screen.dart';
 import 'package:uber_shop_vendor_app/vendor/views/screens/upload_screen.dart';
 import 'package:uber_shop_vendor_app/vendor/views/screens/vendor_message_screen.dart';

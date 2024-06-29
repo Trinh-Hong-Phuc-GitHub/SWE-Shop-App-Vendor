@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:uber_shop_vendor_app/vendor/views/screens/inner_screens/withdrew_earnings_screen.dart';
+import 'package:uber_shop_vendor_app/vendor/views/screens/inner_screens/withdrawl_earnings_screen.dart';
 
 class EarningScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -140,7 +140,7 @@ class EarningScreen extends StatelessWidget {
                       InkWell(
                         onTap: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return WithdrewEarningsScreen();
+                            return WithdrawlEarningsScreen();
                           },));
                         },
                         child: Container(
