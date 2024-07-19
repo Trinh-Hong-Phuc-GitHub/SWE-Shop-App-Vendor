@@ -48,37 +48,39 @@ class _ImagesScreenState extends State<ImagesScreen>
         padding: const EdgeInsets.all(15.0),
         child: Column(
           children: [
-            GridView.builder(
-              shrinkWrap: true,
-              itemCount: _image.length + 1,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 8,
-                childAspectRatio: 3 / 3,
-                crossAxisSpacing: 8,
-              ),
-              itemBuilder: (context, index) {
-                return index == 0
-                    ? Center(
-                        child: IconButton(
-                          onPressed: () {
-                            chooseImage();
-                          },
-                          icon: Icon(
-                            Icons.add,
-                          ),
-                        ),
-                      )
-                    : Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: FileImage(
-                              _image[index - 1],
+            Expanded(
+              child: GridView.builder(
+                shrinkWrap: true,
+                itemCount: _image.length + 1,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  mainAxisSpacing: 8,
+                  childAspectRatio: 3 / 3,
+                  crossAxisSpacing: 8,
+                ),
+                itemBuilder: (context, index) {
+                  return index == 0
+                      ? Center(
+                          child: IconButton(
+                            onPressed: () {
+                              chooseImage();
+                            },
+                            icon: Icon(
+                              Icons.add,
                             ),
                           ),
-                        ),
-                      );
-              },
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: FileImage(
+                                _image[index - 1],
+                              ),
+                            ),
+                          ),
+                        );
+                },
+              ),
             ),
             if (_image.isNotEmpty)
               ElevatedButton(
@@ -103,6 +105,7 @@ class _ImagesScreenState extends State<ImagesScreen>
                 },
                 child: Text('Upload Images'),
               ),
+            SizedBox(height: 90,),
           ],
         ),
       ),

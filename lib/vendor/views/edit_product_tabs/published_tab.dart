@@ -7,6 +7,9 @@ import '../vendor_product_details/vendor_product_detail_screen.dart';
 
 class PublishedTab extends StatelessWidget {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final String searchQuery;
+
+  PublishedTab({required this.searchQuery});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,14 @@ class PublishedTab extends StatelessWidget {
             );
           }
 
-          if (snapshot.data!.docs.isEmpty) {
+          var products = snapshot.data!.docs.where((product) {
+            return product['productName']
+                .toString()
+                .toLowerCase()
+                .contains(searchQuery);
+          }).toList();
+
+          if (products.isEmpty) {
             return Center(
               child: Text(
                 'No Published Products\nYet',
@@ -45,102 +55,103 @@ class PublishedTab extends StatelessWidget {
             );
           }
 
-          return Container(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: ((context, index) {
-                final vendorProductData = snapshot.data!.docs[index];
-                return Slidable(
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                              return VendorProductDetailScreen(
-                                productData: vendorProductData,
-                              );
-                            }));
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 80,
-                              width: 80,
-                              child: Image.network(
-                                  vendorProductData['productImage'][0]),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  vendorProductData['productName'],
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  '\$' +
-                                      ' ' +
-                                      vendorProductData['productPrice']
-                                          .toStringAsFixed(2),
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.pink.shade900),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    // Specify a key if the Slidable is dismissible.
-                    key: const ValueKey(0),
-
-                    // The start action pane is the one at the left or the top side.
-                    startActionPane: ActionPane(
-                      // A motion is a widget used to control how the pane animates.
-                      motion: ScrollMotion(),
-
-                      // A pane can dismiss the Slidable.
-
-                      // All actions are defined in the children parameter.
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: products.length,
+            itemBuilder: ((context, index) {
+              final vendorProductData = products[index];
+              return Slidable(
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                          return VendorProductDetailScreen(
+                            productData: vendorProductData,
+                          );
+                        }));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
                       children: [
-                        // A SlidableAction can have an icon and/or a label.
-                        SlidableAction(
-                          flex: 2,
-                          onPressed: (context) async {
-                            await _firestore
-                                .collection('products')
-                                .doc(vendorProductData['productId'])
-                                .update({
-                              'approved': false,
-                            });
-                          },
-                          backgroundColor: Color(0xFF21B7CA),
-                          foregroundColor: Colors.white,
-                          icon: Icons.approval_rounded,
-                          label: 'Unpublish',
+                        Container(
+                          height: 80,
+                          width: 80,
+                          child: Image.network(
+                              vendorProductData['productImage'][0]),
                         ),
-                        SlidableAction(
-                          flex: 2,
-                          onPressed: (context) async {
-                            await _firestore
-                                .collection('products')
-                                .doc(vendorProductData['productId'])
-                                .delete();
-                          },
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                          icon: Icons.delete,
-                          label: 'Delete',
-                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                vendorProductData['productName'],
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                              ),
+                              Text(
+                                '\$' +
+                                    ' ' +
+                                    vendorProductData['productPrice']
+                                        .toStringAsFixed(2),
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.pink.shade900),
+                              ),
+                              Text(
+                                'Quantity: ' +
+                                    vendorProductData['productQuantity']
+                                        .toString(),
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
-                    ));
-              }),
-            ),
+                    ),
+                  ),
+                ),
+                key: ValueKey(vendorProductData['productId']),
+                startActionPane: ActionPane(
+                  motion: ScrollMotion(),
+                  children: [
+                    SlidableAction(
+                      flex: 2,
+                      onPressed: (context) async {
+                        await _firestore
+                            .collection('products')
+                            .doc(vendorProductData['productId'])
+                            .update({
+                          'approved': false,
+                        });
+                      },
+                      backgroundColor: Color(0xFF21B7CA),
+                      foregroundColor: Colors.white,
+                      icon: Icons.approval_rounded,
+                      label: 'Unpublish',
+                    ),
+                    SlidableAction(
+                      flex: 2,
+                      onPressed: (context) async {
+                        await _firestore
+                            .collection('products')
+                            .doc(vendorProductData['productId'])
+                            .delete();
+                      },
+                      backgroundColor: Colors.red,
+                      foregroundColor: Colors.white,
+                      icon: Icons.delete,
+                      label: 'Delete',
+                    ),
+                  ],
+                ),
+              );
+            }),
           );
         },
       ),

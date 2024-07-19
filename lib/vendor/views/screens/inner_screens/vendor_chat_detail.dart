@@ -6,12 +6,14 @@ class VendorChatDetail extends StatefulWidget {
   final String buyerId;
   final String sellerId;
   final String productId;
+  final String productName;
   final dynamic data;
 
   const VendorChatDetail({super.key,
     required this.buyerId,
     required this.sellerId,
     required this.productId,
+    required this.productName,
     required this.data});
 
   @override
@@ -46,6 +48,7 @@ class _ChatScreenState extends State<VendorChatDetail> {
     if (message.isNotEmpty) {
       await _firestore.collection('chats').add({
         'productId': widget.productId,
+        'productName': widget.productName,
         'buyerName': (buyerDoc.data() as Map<String, dynamic>)['fullName'],
         'buyerPhoto': (buyerDoc.data() as Map<String, dynamic>)['profileImage'],
         'sellerPhoto': (vendorDoc.data() as Map<String, dynamic>)['storeImage'],
@@ -66,7 +69,7 @@ class _ChatScreenState extends State<VendorChatDetail> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Chat Screen',
+          'Chat Screen'+ ">" + widget.productName,
           style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.bold,

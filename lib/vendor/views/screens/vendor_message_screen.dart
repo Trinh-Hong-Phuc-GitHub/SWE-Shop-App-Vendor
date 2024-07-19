@@ -52,6 +52,10 @@ class VendorMessageScreen extends StatelessWidget {
 
               String productId = data['productId'].toString();
 
+              String productName = data['productName'].toString();
+
+              String buyerName = data['buyerName'].toString();
+
               /// Check if the message is from the seller
               bool isSellerMessage = senderId == FirebaseAuth.instance.currentUser!.uid;
 
@@ -67,6 +71,7 @@ class VendorMessageScreen extends StatelessWidget {
                           buyerId: data['buyerId'],
                           sellerId: FirebaseAuth.instance.currentUser!.uid,
                           productId: productId,
+                          productName: productName,
                           data: data,
                         );
                       },));
@@ -77,7 +82,7 @@ class VendorMessageScreen extends StatelessWidget {
                         backgroundImage: NetworkImage(data['buyerPhoto']),
                       ),
                       title: Text(message),
-                      subtitle: Text('Sender By Buyer'),
+                      subtitle: Text('Sender By Buyer $buyerName'),
                     ),
                   );
                 }

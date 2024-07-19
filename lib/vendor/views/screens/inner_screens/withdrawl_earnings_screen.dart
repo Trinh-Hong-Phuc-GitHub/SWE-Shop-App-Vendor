@@ -165,7 +165,7 @@ class _WithdrawlEarningsScreenState extends State<WithdrawlEarningsScreen> {
                         'businessName': (userDoc.data()
                             as Map<String, dynamic>)['businessName'],
                         'bankName': bankName,
-                        'accountAccount': accountName,
+                        'accountName': accountName,
                         'accountNumber': accountNumber,
                         'amount': amount,
                       }).whenComplete((){

@@ -152,6 +152,9 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
                   labelText: 'Enter Product Description',
                 ),
               ),
+              SizedBox(
+                height: 100,
+              ),
             ],
           ),
         ),

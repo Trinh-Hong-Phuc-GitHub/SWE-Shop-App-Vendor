@@ -28,6 +28,8 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
 
   late String emailAddress;
 
+  late String address;
+
   late String phoneNumber;
 
   selectGalleryImage() async {
@@ -49,139 +51,157 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: Colors.pink,
-            toolbarHeight: 200,
-            flexibleSpace: LayoutBuilder(builder: ((context, constraints) {
-              return FlexibleSpaceBar(
-                background: Center(
-                  child: Container(
-                    height: 90,
-                    width: 90,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    child: _image != null
-                        ? Image.memory(_image!)
-                        : IconButton(
-                            onPressed: () {
-                              selectGalleryImage();
-                            },
-                            icon: Icon(
-                              CupertinoIcons.photo,
-                            ),
-                          ),
-                  ),
+      resizeToAvoidBottomInset: false, // Ensures bottom overflow error does not occur
+      appBar: AppBar(
+        backgroundColor: Colors.pink,
+        toolbarHeight: 200,
+        flexibleSpace: LayoutBuilder(builder: ((context, constraints) {
+          return FlexibleSpaceBar(
+            background: Center(
+              child: Container(
+                height: 90,
+                width: 90,
+                decoration: BoxDecoration(
+                  color: Colors.white,
                 ),
-              );
-            })),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    TextFormField(
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please Fill Business Name';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (value) {
-                        businessName = value;
-                      },
-                      keyboardType: TextInputType.name,
-                      decoration: InputDecoration(
-                        labelText: 'Business Name',
-                        hintText: 'Business Name',
-                        hintStyle: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please Fill Email Address';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (value) {
-                        emailAddress = value;
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        labelText: 'Email Address',
-                        hintText: 'Email Address',
-                        hintStyle: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TextFormField(
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please Fill Phone Number';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onChanged: (value) {
-                        phoneNumber = value;
-                      },
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                        labelText: 'Phone Number',
-                        hintText: 'Phone Number',
-                        hintStyle: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    SelectState(
-                      onCountryChanged: (value) {
-                        setState(() {
-                          countryValue = value;
-                        });
-                      },
-                      onStateChanged: (value) {
-                        setState(() {
-                          stateValue = value;
-                        });
-                      },
-                      onCityChanged: (value) {
-                        setState(() {
-                          cityValue = value;
-                        });
-                      },
-                    ),
-                  ],
+                child: _image != null
+                    ? Image.memory(_image!)
+                    : IconButton(
+                  onPressed: () {
+                    selectGalleryImage();
+                  },
+                  icon: Icon(
+                    CupertinoIcons.photo,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          );
+        })),
       ),
-      bottomSheet: Padding(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please Fill Business Name';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onChanged: (value) {
+                    businessName = value;
+                  },
+                  keyboardType: TextInputType.name,
+                  decoration: InputDecoration(
+                    labelText: 'Business Name',
+                    hintText: 'Business Name',
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please Fill Email Address';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onChanged: (value) {
+                    emailAddress = value;
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    labelText: 'Email Address',
+                    hintText: 'Email Address',
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please Fill Phone Number';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onChanged: (value) {
+                    phoneNumber = value;
+                  },
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    labelText: 'Phone Number',
+                    hintText: 'Phone Number',
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SelectState(
+                  onCountryChanged: (value) {
+                    setState(() {
+                      countryValue = value;
+                    });
+                  },
+                  onStateChanged: (value) {
+                    setState(() {
+                      stateValue = value;
+                    });
+                  },
+                  onCityChanged: (value) {
+                    setState(() {
+                      cityValue = value;
+                    });
+                  },
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please Fill Specific Address';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onChanged: (value) {
+                    address = value;
+                  },
+                  keyboardType: TextInputType.name,
+                  decoration: InputDecoration(
+                    labelText: 'Specific Address',
+                    hintText: 'Specific Address',
+                    hintStyle: TextStyle(
+                      color: Colors.grey,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(8.0),
         child: InkWell(
           onTap: () {
@@ -194,6 +214,7 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                 countryValue,
                 stateValue,
                 cityValue,
+                address,
                 _image,
               ).whenComplete(() {
                 EasyLoading.dismiss();

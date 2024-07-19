@@ -44,6 +44,7 @@ class VendorController {
     String countryValue,
     String stateValue,
     String cityValue,
+    String address,
     Uint8List? image,
   ) async {
     String res = 'something went wrong';
@@ -57,6 +58,7 @@ class VendorController {
         'countryValue': countryValue,
         'stateValue': stateValue,
         'cityValue': cityValue,
+        'address': address,
         'vendorId': _auth.currentUser!.uid,
         'approved': false,
       });

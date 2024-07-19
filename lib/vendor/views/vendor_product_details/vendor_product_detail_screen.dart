@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:uber_shop_vendor_app/vendor/views/screens/edit_product_screen.dart';
 
 class VendorProductDetailScreen extends StatefulWidget {
   final dynamic productData;
 
-  const VendorProductDetailScreen({super.key, required this.productData});
+  const VendorProductDetailScreen({Key? key, required this.productData})
+      : super(key: key);
 
   @override
   State<VendorProductDetailScreen> createState() =>
@@ -24,84 +26,97 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
 
   @override
   void initState() {
-    setState(() {
-      _productNameController.text = widget.productData['productName'];
-      _brandNameController.text = widget.productData['brandName'];
-      _quantityController.text = widget.productData['productQuantity'].toString();
-      _productPriceController.text =
-          widget.productData['productPrice'].toString();
-
-      _productDescriptionController.text = widget.productData['description'];
-      _categoryNameController.text = widget.productData['category'];
-    });
     super.initState();
+    _productNameController.text = widget.productData['productName'];
+    _brandNameController.text = widget.productData['brandName'];
+    _quantityController.text = widget.productData['productQuantity'].toString();
+    _productPriceController.text =
+        widget.productData['productPrice'].toString();
+    _productDescriptionController.text = widget.productData['description'];
+    _categoryNameController.text = widget.productData['category'];
   }
 
   double? productPrice;
-
   int? productQuantity;
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 2),
+    ));
+  }
+
+  void _showDialog(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pink.shade900,
         elevation: 0,
-        title: Text(
-          widget.productData['productName'],
-        ),
+        title: Text(widget.productData['productName']),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(children: [
-            TextFormField(
-              controller: _productNameController,
-              decoration: InputDecoration(labelText: 'Product Name'),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              controller: _brandNameController,
-              decoration: InputDecoration(labelText: 'Brand Name'),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              onChanged: (value) {
-                productQuantity = int.parse(value);
-              },
-              controller: _quantityController,
-              decoration: InputDecoration(labelText: 'Quantity'),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              onChanged: (value) {
-                productPrice = double.parse(value);
-              },
-              controller: _productPriceController,
-              decoration: InputDecoration(labelText: 'Price'),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              maxLines: 3,
-              controller: _productDescriptionController,
-              decoration: InputDecoration(labelText: 'Description'),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              enabled: false,
-              controller: _categoryNameController,
-              decoration: InputDecoration(labelText: 'Category'),
-            ),
-          ]),
+          child: Column(
+            children: [
+              TextFormField(
+                controller: _productNameController,
+                decoration: InputDecoration(labelText: 'Product Name'),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: _brandNameController,
+                decoration: InputDecoration(labelText: 'Brand Name'),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                onChanged: (value) {
+                  productQuantity = int.tryParse(value);
+                },
+                controller: _quantityController,
+                decoration: InputDecoration(labelText: 'Quantity'),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                onChanged: (value) {
+                  productPrice = double.tryParse(value);
+                },
+                controller: _productPriceController,
+                decoration: InputDecoration(labelText: 'Price'),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                maxLines: 3,
+                controller: _productDescriptionController,
+                decoration: InputDecoration(labelText: 'Description'),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                enabled: false,
+                controller: _categoryNameController,
+                decoration: InputDecoration(labelText: 'Category'),
+              ),
+            ],
+          ),
         ),
       ),
       bottomSheet: Padding(
@@ -109,19 +124,20 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
         child: InkWell(
           onTap: () async {
             if (productPrice != null && productQuantity != null) {
-              await _firestore
-                  .collection('products')
-                  .doc(widget.productData['productId'])
-                  .update({
-                'productName': _productNameController.text,
-                'brandName': _brandNameController.text,
-                'quantity': productQuantity,
-                'productPrice': productPrice,
-                'description': _productDescriptionController.text,
-                'category': _categoryNameController.text,
-              });
+                await _firestore
+                    .collection('products')
+                    .doc(widget.productData['productId'])
+                    .update({
+                  'productName': _productNameController.text,
+                  'brandName': _brandNameController.text,
+                  'productQuantity': productQuantity,
+                  'productPrice': productPrice,
+                  'description': _productDescriptionController.text,
+                  'category': _categoryNameController.text,
+                });
+                EasyLoading.showSuccess('Update Successful!');
             } else {
-              Get.snackbar('CART', 'Upadate Quatity And Price');
+              _showDialog('Error', 'Update Quantity And Price');
             }
           },
           child: Container(

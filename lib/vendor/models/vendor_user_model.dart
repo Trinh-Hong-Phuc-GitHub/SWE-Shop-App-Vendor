@@ -5,6 +5,7 @@ class VendorUserModel {
   final String phoneNumber;
   final String countryValue;
   final String stateValue;
+  final String address;
   final String emailAddress;
   final String storeImage;
   final String vendorId;
@@ -16,6 +17,7 @@ class VendorUserModel {
       required this.phoneNumber,
       required this.countryValue,
       required this.stateValue,
+      required this.address,
       required this.emailAddress,
       required this.storeImage,
       required this.vendorId});
@@ -28,6 +30,7 @@ class VendorUserModel {
           phoneNumber: json['phoneNumber']! as String,
           countryValue: json['countryValue']! as String,
           stateValue: json['stateValue']! as String,
+          address: json['address']! as String,
           emailAddress: json['emailAddress'] as String,
           storeImage: json['storeImage']! as String,
           vendorId: json['vendorId']! as String,
@@ -41,6 +44,7 @@ class VendorUserModel {
       'phoneNumber': phoneNumber,
       'countryValue': countryValue,
       'stateValue': stateValue,
+      'address': address,
       'emailAddress': emailAddress,
       'storeImage': storeImage,
       'vendorId': vendorId,

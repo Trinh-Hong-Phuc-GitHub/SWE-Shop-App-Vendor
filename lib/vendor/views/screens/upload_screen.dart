@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 import 'package:uber_shop_vendor_app/vendor/provider/product_provider.dart';
+import 'package:uber_shop_vendor_app/vendor/views/screens/edit_product_screen.dart';
 import 'package:uber_shop_vendor_app/vendor/views/screens/tab_bar_screen/attributes_screen.dart';
 import 'package:uber_shop_vendor_app/vendor/views/screens/tab_bar_screen/general_screen.dart';
 import 'package:uber_shop_vendor_app/vendor/views/screens/tab_bar_screen/images_screen.dart';
@@ -18,7 +19,7 @@ class UploadScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ProductProvider _productProvider =
-        Provider.of<ProductProvider>(context);
+    Provider.of<ProductProvider>(context);
     return DefaultTabController(
       length: 4,
       child: Scaffold(
@@ -78,36 +79,38 @@ class UploadScreen extends StatelessWidget {
                   'productName': _productProvider.productData['productName'],
                   'productPrice': _productProvider.productData['productPrice'],
                   'productQuantity':
-                      _productProvider.productData['productQuantity'],
+                  _productProvider.productData['productQuantity'],
                   'category': _productProvider.productData['category'],
                   'description': _productProvider.productData['description'],
                   'chargeShipping':
-                      _productProvider.productData['chargeShipping'],
+                  _productProvider.productData['chargeShipping'],
                   'shippingCharge':
-                      _productProvider.productData['shippingCharge'],
+                  _productProvider.productData['shippingCharge'],
                   'brandName': _productProvider.productData['brandName'],
                   'sizeList': _productProvider.productData['sizeList'],
                   'productImage': _productProvider.productData['imageUrlList'],
                   'businessName':
-                      (userDoc.data() as Map<String, dynamic>)['businessName'],
+                  (userDoc.data() as Map<String, dynamic>)['businessName'],
+                  'vendorAddress':
+                  (userDoc.data() as Map<String, dynamic>)['address'],
                   'storeImage':
-                      (userDoc.data() as Map<String, dynamic>)['storeImage'],
+                  (userDoc.data() as Map<String, dynamic>)['storeImage'],
                   'countryValue':
-                      (userDoc.data() as Map<String, dynamic>)['countryValue'],
+                  (userDoc.data() as Map<String, dynamic>)['countryValue'],
                   'cityValue':
-                      (userDoc.data() as Map<String, dynamic>)['cityValue'],
+                  (userDoc.data() as Map<String, dynamic>)['cityValue'],
                   'stateValue':
-                      (userDoc.data() as Map<String, dynamic>)['stateValue'],
+                  (userDoc.data() as Map<String, dynamic>)['stateValue'],
                   'phoneNumber':
-                      (userDoc.data() as Map<String, dynamic>)['phoneNumber'],
+                  (userDoc.data() as Map<String, dynamic>)['phoneNumber'],
                   'vendorId': _auth.currentUser!.uid,
                   'rating': 0,
                   'totalReviews': 0,
                   'approved': false,
                 }).whenComplete(() {
                   EasyLoading.dismiss();
-                  EasyLoading.showSuccess('Upload Successful!');
                   _productProvider.clearData();
+                  EasyLoading.showSuccess('Upload Successful!');
                 });
               } else {
                 print('Not Valid');
@@ -115,7 +118,10 @@ class UploadScreen extends StatelessWidget {
             },
             child: Container(
               height: 50,
-              width: MediaQuery.of(context).size.width,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width,
               decoration: BoxDecoration(
                 color: Colors.pink,
                 borderRadius: BorderRadius.circular(8.0),

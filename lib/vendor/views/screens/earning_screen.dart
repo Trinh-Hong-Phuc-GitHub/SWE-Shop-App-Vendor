@@ -15,6 +15,8 @@ class EarningScreen extends StatelessWidget {
     final Stream<QuerySnapshot> _ordersStream = FirebaseFirestore.instance
         .collection('orders')
         .where('vendorId', isEqualTo: _auth.currentUser!.uid)
+        .where('accepted', isEqualTo: true)
+        .where('orderStatus', isEqualTo: 'Delivered Successfully')
         .snapshots();
 
     return FutureBuilder<DocumentSnapshot>(
@@ -69,7 +71,9 @@ class EarningScreen extends StatelessWidget {
                 double totalOrder = 0.0;
 
                 for (var orderItem in snapshot.data!.docs) {
-                  totalOrder += orderItem['quantity'] * orderItem['price'];
+                  // totalOrder += orderItem['quantity'] * orderItem['price'];
+                  totalOrder += orderItem['price'];
+
                 }
 
                 return Center(
@@ -119,7 +123,7 @@ class EarningScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              'Total Earning',
+                              'Total Successful Order',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -137,32 +141,32 @@ class EarningScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) {
-                            return WithdrawlEarningsScreen();
-                          },));
-                        },
-                        child: Container(
-                          height: 50,
-                          width: MediaQuery.of(context).size.width - 60,
-                          decoration: BoxDecoration(
-                            color: Colors.pink.shade900,
-                            borderRadius: BorderRadius.circular(9),
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Withdrew',
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                letterSpacing: 2,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // InkWell(
+                      //   onTap: () {
+                      //     Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      //       return WithdrawlEarningsScreen();
+                      //     },));
+                      //   },
+                      //   child: Container(
+                      //     height: 50,
+                      //     width: MediaQuery.of(context).size.width - 60,
+                      //     decoration: BoxDecoration(
+                      //       color: Colors.pink.shade900,
+                      //       borderRadius: BorderRadius.circular(9),
+                      //     ),
+                      //     child: Center(
+                      //       child: Text(
+                      //         'Withdrew',
+                      //         style: TextStyle(
+                      //           fontSize: 17,
+                      //           fontWeight: FontWeight.bold,
+                      //           color: Colors.white,
+                      //           letterSpacing: 2,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 );
