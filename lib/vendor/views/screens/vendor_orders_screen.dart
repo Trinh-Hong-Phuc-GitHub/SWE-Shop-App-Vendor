@@ -4,14 +4,76 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 
-class VendorOrdersScreen extends StatelessWidget {
+class VendorOrdersScreen extends StatefulWidget {
+  @override
+  _VendorOrdersScreenState createState() => _VendorOrdersScreenState();
+}
+
+class _VendorOrdersScreenState extends State<VendorOrdersScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
   String formattedDate(date) {
     final outputDateFormat = DateFormat("dd/MM/yyyy");
     final outputDate = outputDateFormat.format(date);
     return outputDate;
+  }
+
+  Future<void> updateOrderStatus(
+      BuildContext context, String orderId, String status) async {
+    await _firestore.collection('orders').doc(orderId).update({
+      'orderStatus': status,
+    });
+  }
+
+  Future<void> handleAcceptOrder(
+      BuildContext context, Map<String, dynamic> data) async {
+    final productSnapshot = await _firestore
+        .collection('products')
+        .doc(data['productId'])
+        .get();
+    final productData = productSnapshot.data() as Map<String, dynamic>;
+
+    if (productData['productQuantity'] >= data['quantity']) {
+      // Accept the order
+      await _firestore.collection('orders').doc(data['orderId']).update({
+        'accepted': true,
+      });
+
+      // Update product quantity
+      await _firestore.collection('products').doc(data['productId']).update({
+        'productQuantity': productData['productQuantity'] - data['quantity'],
+      });
+    } else {
+      // Show alert if the condition is not met
+      if (mounted) {
+        showDialog(
+          context: _navigatorKey.currentContext!,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('Quantity Error'),
+              content: Text('Not Enough Quantity In Stock to Fulfill This Order'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
+  }
+
+  Future<void> handleRejectOrder(
+      BuildContext context, Map<String, dynamic> data) async {
+    await _firestore.collection('orders').doc(data['orderId']).update({
+      'accepted': false,
+    });
   }
 
   @override
@@ -22,6 +84,7 @@ class VendorOrdersScreen extends StatelessWidget {
         .snapshots();
 
     return Scaffold(
+      key: _navigatorKey, // Set the key here
       appBar: AppBar(
         title: Text(
           'Orders',
@@ -47,43 +110,37 @@ class VendorOrdersScreen extends StatelessWidget {
           return ListView(
             children: snapshot.data!.docs.map((DocumentSnapshot document) {
               Map<String, dynamic> data =
-                  document.data()! as Map<String, dynamic>;
+              document.data()! as Map<String, dynamic>;
 
               return data['accepted'] == false
                   ? Slidable(
-                      key: ValueKey(data['orderId']),
-                      startActionPane: ActionPane(
-                        motion: const ScrollMotion(),
-                        dismissible: DismissiblePane(onDismissed: () {}),
-                        children: [
-                          SlidableAction(
-                            onPressed: (context) async {
-                              await _firestore
-                                  .collection('orders')
-                                  .doc(data['orderId'])
-                                  .update({'accepted': false});
-                            },
-                            backgroundColor: Color(0xFFFE4A49),
-                            foregroundColor: Colors.white,
-                            icon: Icons.delete,
-                            label: 'Reject',
-                          ),
-                          SlidableAction(
-                            onPressed: (context) async {
-                              await _firestore
-                                  .collection('orders')
-                                  .doc(data['orderId'])
-                                  .update({'accepted': true});
-                            },
-                            backgroundColor: Color(0xFF21B7CA),
-                            foregroundColor: Colors.white,
-                            icon: Icons.check,
-                            label: 'Accept',
-                          ),
-                        ],
-                      ),
-                      child: buildOrderListItem(context, data),
-                    )
+                key: ValueKey(data['orderId']),
+                startActionPane: ActionPane(
+                  motion: const ScrollMotion(),
+                  dismissible: DismissiblePane(onDismissed: () {}),
+                  children: [
+                    SlidableAction(
+                      onPressed: (context) {
+                        handleRejectOrder(context, data);
+                      },
+                      backgroundColor: Color(0xFFFE4A49),
+                      foregroundColor: Colors.white,
+                      icon: Icons.delete,
+                      label: 'Reject',
+                    ),
+                    SlidableAction(
+                      onPressed: (context) {
+                        handleAcceptOrder(context, data);
+                      },
+                      backgroundColor: Color(0xFF21B7CA),
+                      foregroundColor: Colors.white,
+                      icon: Icons.check,
+                      label: 'Accept',
+                    ),
+                  ],
+                ),
+                child: buildOrderListItem(context, data),
+              )
                   : buildOrderListItem(context, data);
             }).toList(),
           );
@@ -105,21 +162,21 @@ class VendorOrdersScreen extends StatelessWidget {
           ),
           title: data['accepted'] == true
               ? Text(
-                  'Accepted',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                  ),
-                )
+            'Accepted',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.blue,
+            ),
+          )
               : Text(
-                  'Not Accepted',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red,
-                  ),
-                ),
+            'Not Accepted',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.red,
+            ),
+          ),
           trailing: Text(
             "\$${data['price'].toStringAsFixed(2)}",
             style: TextStyle(
@@ -247,9 +304,17 @@ class VendorOrdersScreen extends StatelessWidget {
                       child: Text(
                         'Order Status: ' + data['orderStatus'],
                         style: TextStyle(
+                          color: Colors.green,
+                        ),
+                      ),
+                    ),
+                  if (data['accepted'] == false)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        'Order Status: Not Accepted',
+                        style: TextStyle(
                           color: Colors.red,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
                         ),
                       ),
                     ),
@@ -258,12 +323,10 @@ class VendorOrdersScreen extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () async {
                         final result = await showDialog(
-                          context: context,
+                          context: _navigatorKey.currentContext!,
                           builder: (context) {
                             return AlertDialog(
-                              title: Text('Have you finished packing?'),
-                              content: Text(
-                                  'Do you want to change order status to shipping?'),
+                              title: Text('Change order status to Shipping?'),
                               actions: [
                                 TextButton(
                                   onPressed: () {
@@ -281,11 +344,8 @@ class VendorOrdersScreen extends StatelessWidget {
                             );
                           },
                         );
-                        if (result == true) {
-                          await _firestore
-                              .collection('orders')
-                              .doc(data['orderId'])
-                              .update({'orderStatus': 'Shipping'});
+                        if (result == true && mounted) {
+                          await updateOrderStatus(context, data['orderId'], 'Shipping');
                         }
                       },
                       child: Text('Mark as Shipping'),
@@ -295,11 +355,10 @@ class VendorOrdersScreen extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () async {
                         final result = await showDialog(
-                          context: context,
+                          context: _navigatorKey.currentContext!,
                           builder: (context) {
                             return AlertDialog(
-                              title: Text(
-                                  'Order delivered successfully or failed?'),
+                              title: Text('Order delivered successfully or failed?'),
                               actions: [
                                 TextButton(
                                   onPressed: () {
@@ -317,18 +376,20 @@ class VendorOrdersScreen extends StatelessWidget {
                             );
                           },
                         );
-                        if (result == 'successful') {
-                          await _firestore
-                              .collection('orders')
-                              .doc(data['orderId'])
-                              .update(
-                                  {'orderStatus': 'Delivered Successfully'});
-                        } else if (result == 'failed') {
-                          await _firestore
-                              .collection('orders')
-                              .doc(data['orderId'])
-                              .update(
-                                  {'orderStatus': 'Delivered Unsuccessfully'});
+                        if (result == 'successful' && mounted) {
+                          await updateOrderStatus(context, data['orderId'], 'Delivered Successfully');
+                        } else if (result == 'failed' && mounted) {
+                          await updateOrderStatus(context, data['orderId'], 'Delivered Unsuccessfully');
+
+                          // Update product quantity if delivery failed
+                          final productSnapshot = await _firestore
+                              .collection('products')
+                              .doc(data['productId'])
+                              .get();
+                          final productData = productSnapshot.data() as Map<String, dynamic>;
+                          await _firestore.collection('products').doc(data['productId']).update({
+                            'productQuantity': productData['productQuantity'] + data['quantity'],
+                          });
                         }
                       },
                       child: Text('Change Shipping Status'),
