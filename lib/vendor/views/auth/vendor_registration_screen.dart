@@ -89,7 +89,7 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                 TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please Fill Business Name';
+                      return 'Vui lòng nhập tên cửa hàng';
                     } else {
                       return null;
                     }
@@ -99,8 +99,8 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                   },
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
-                    labelText: 'Business Name',
-                    hintText: 'Business Name',
+                    labelText: 'Tên cửa hàng',
+                    hintText: 'Tên cửa hàng',
                     hintStyle: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
@@ -113,7 +113,7 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                 TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please Fill Email Address';
+                      return 'Vui lòng nập địa chỉ email';
                     } else {
                       return null;
                     }
@@ -123,8 +123,8 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                   },
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                    labelText: 'Email Address',
-                    hintText: 'Email Address',
+                    labelText: 'Email',
+                    hintText: 'Email',
                     hintStyle: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
@@ -137,7 +137,7 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                 TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please Fill Phone Number';
+                      return 'Vui lòng nhập số điện thoại';
                     } else {
                       return null;
                     }
@@ -147,8 +147,8 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                   },
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
-                    labelText: 'Phone Number',
-                    hintText: 'Phone Number',
+                    labelText: 'Số điện thoại',
+                    hintText: 'Số điện thoại',
                     hintStyle: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
@@ -178,7 +178,7 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                 TextFormField(
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please Fill Specific Address';
+                      return 'Vui lòng nhập địa chỉ cụ thể';
                     } else {
                       return null;
                     }
@@ -188,8 +188,8 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
                   },
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
-                    labelText: 'Specific Address',
-                    hintText: 'Specific Address',
+                    labelText: 'Địa chỉ cụ thể',
+                    hintText: 'Địa chỉ cụ thể',
                     hintStyle: TextStyle(
                       color: Colors.grey,
                       fontWeight: FontWeight.bold,
@@ -206,7 +206,7 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
         child: InkWell(
           onTap: () {
             if (_formKey.currentState!.validate()) {
-              EasyLoading.show(status: 'Please Wait!');
+              EasyLoading.show(status: 'Vui lòng chờ!');
               _vendorController.vendorRegistrationForm(
                 businessName,
                 emailAddress,
@@ -232,7 +232,7 @@ class _VendorRegistrationScreenState extends State<VendorRegistrationScreen> {
             ),
             child: Center(
               child: Text(
-                'Save',
+                'Lưu',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

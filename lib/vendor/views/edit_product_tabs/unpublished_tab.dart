@@ -41,7 +41,7 @@ class UnPublishedTab extends StatelessWidget {
           if (products.isEmpty) {
             return Center(
               child: Text(
-                'No Unpublished Products\nYet',
+                'Không Có Sản Phẩm',
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
@@ -79,17 +79,15 @@ class UnPublishedTab extends StatelessWidget {
                               maxLines: 1,
                             ),
                             Text(
-                              '\$' +
-                                  ' ' +
                                   vendorProductData['productPrice']
-                                      .toStringAsFixed(2),
+                                      .toStringAsFixed(0) + ' đ',
                               style: TextStyle(
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.pink.shade900),
                             ),
                             Text(
-                              'Quantity: ' +
+                              'Số lượng: ' +
                                   vendorProductData['productQuantity']
                                       .toString(),
                               style: TextStyle(
@@ -119,7 +117,7 @@ class UnPublishedTab extends StatelessWidget {
                       backgroundColor: Color(0xFF21B7CA),
                       foregroundColor: Colors.white,
                       icon: Icons.approval_sharp,
-                      label: 'Publish',
+                      label: 'Công khai',
                     ),
                     SlidableAction(
                       flex: 2,
@@ -132,7 +130,7 @@ class UnPublishedTab extends StatelessWidget {
                       backgroundColor: Colors.red,
                       foregroundColor: Colors.white,
                       icon: Icons.delete,
-                      label: 'Delete',
+                      label: 'Xóa',
                     ),
                   ],
                 ),

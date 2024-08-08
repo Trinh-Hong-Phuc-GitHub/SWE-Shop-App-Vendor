@@ -45,7 +45,7 @@ class PublishedTab extends StatelessWidget {
           if (products.isEmpty) {
             return Center(
               child: Text(
-                'No Published Products\nYet',
+                'Không có sản phẩm nào',
                 style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
@@ -92,17 +92,15 @@ class PublishedTab extends StatelessWidget {
                                 maxLines: 1,
                               ),
                               Text(
-                                '\$' +
-                                    ' ' +
                                     vendorProductData['productPrice']
-                                        .toStringAsFixed(2),
+                                        .toStringAsFixed(0) + ' đ',
                                 style: TextStyle(
                                     fontSize: 17,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.pink.shade900),
                               ),
                               Text(
-                                'Quantity: ' +
+                                'Số lượng: ' +
                                     vendorProductData['productQuantity']
                                         .toString(),
                                 style: TextStyle(
@@ -133,7 +131,7 @@ class PublishedTab extends StatelessWidget {
                       backgroundColor: Color(0xFF21B7CA),
                       foregroundColor: Colors.white,
                       icon: Icons.approval_rounded,
-                      label: 'Unpublish',
+                      label: 'Riêng Tư',
                     ),
                     SlidableAction(
                       flex: 2,
@@ -146,7 +144,7 @@ class PublishedTab extends StatelessWidget {
                       backgroundColor: Colors.red,
                       foregroundColor: Colors.white,
                       icon: Icons.delete,
-                      label: 'Delete',
+                      label: 'Xóa',
                     ),
                   ],
                 ),

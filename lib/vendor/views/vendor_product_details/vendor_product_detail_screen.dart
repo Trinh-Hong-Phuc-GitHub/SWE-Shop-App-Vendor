@@ -80,12 +80,12 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
             children: [
               TextFormField(
                 controller: _productNameController,
-                decoration: InputDecoration(labelText: 'Product Name'),
+                decoration: InputDecoration(labelText: 'Tên sản phẩm'),
               ),
               SizedBox(height: 20),
               TextFormField(
                 controller: _brandNameController,
-                decoration: InputDecoration(labelText: 'Brand Name'),
+                decoration: InputDecoration(labelText: 'Thương hiệu'),
               ),
               SizedBox(height: 20),
               TextFormField(
@@ -93,7 +93,7 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
                   productQuantity = int.tryParse(value);
                 },
                 controller: _quantityController,
-                decoration: InputDecoration(labelText: 'Quantity'),
+                decoration: InputDecoration(labelText: 'Số lượng'),
               ),
               SizedBox(height: 20),
               TextFormField(
@@ -101,19 +101,19 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
                   productPrice = double.tryParse(value);
                 },
                 controller: _productPriceController,
-                decoration: InputDecoration(labelText: 'Price'),
+                decoration: InputDecoration(labelText: 'Đơn giá'),
               ),
               SizedBox(height: 20),
               TextFormField(
                 maxLines: 3,
                 controller: _productDescriptionController,
-                decoration: InputDecoration(labelText: 'Description'),
+                decoration: InputDecoration(labelText: 'Mô tả'),
               ),
               SizedBox(height: 20),
               TextFormField(
                 enabled: false,
                 controller: _categoryNameController,
-                decoration: InputDecoration(labelText: 'Category'),
+                decoration: InputDecoration(labelText: 'Phân loại'),
               ),
             ],
           ),
@@ -135,9 +135,9 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
                   'description': _productDescriptionController.text,
                   'category': _categoryNameController.text,
                 });
-                EasyLoading.showSuccess('Update Successful!');
+                EasyLoading.showSuccess('Sửa thành công!');
             } else {
-              _showDialog('Error', 'Update Quantity And Price');
+              _showDialog('Lỗi', 'Cần cập nhật giá và số lượng');
             }
           },
           child: Container(
@@ -151,7 +151,7 @@ class _VendorProductDetailScreenState extends State<VendorProductDetailScreen> {
             ),
             child: Center(
                 child: Text(
-                  "UPDATE PRODUCT",
+                  "CẬP NHẬT",
                   style: TextStyle(
                     fontSize: 18,
                     letterSpacing: 6,

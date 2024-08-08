@@ -16,7 +16,7 @@ class VendorMessageScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Messages',
+          'Tin Nhắn',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -82,7 +82,7 @@ class VendorMessageScreen extends StatelessWidget {
                         backgroundImage: NetworkImage(data['buyerPhoto']),
                       ),
                       title: Text(message),
-                      subtitle: Text('Sender By Buyer $buyerName'),
+                      subtitle: Text('Được gửi bởi khách hàng $buyerName'),
                     ),
                   );
                 }

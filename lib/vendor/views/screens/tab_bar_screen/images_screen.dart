@@ -103,7 +103,7 @@ class _ImagesScreenState extends State<ImagesScreen>
                   EasyLoading.dismiss();
                   _productProvider.getFormData(imageUrlList: _imageUrlList);
                 },
-                child: Text('Upload Images'),
+                child: Text('Thêm ảnh'),
               ),
             SizedBox(height: 90,),
           ],

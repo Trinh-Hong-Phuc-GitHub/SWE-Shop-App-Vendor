@@ -59,7 +59,7 @@ class LandingScreen extends StatelessWidget {
                   height: 15,
                 ),
                 Text(
-                  'Your Application, has been sent to shop admin\nadmin will get back to you soon',
+                  'Yêu cầu của bạn đã được gửi đi\nAdmin sẽ xét duyệt nếu thông tin chính xác',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 18,
@@ -86,7 +86,7 @@ class LandingScreen extends StatelessWidget {
                     await _auth.signOut();
                   },
                   child: Text(
-                    'Sign out',
+                    'Đăng Xuất',
                   ),
                 ),
               ],

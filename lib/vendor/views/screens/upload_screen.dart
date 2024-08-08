@@ -28,7 +28,7 @@ class UploadScreen extends StatelessWidget {
           elevation: 0,
           // backgroundColor: Colors.yellow.shade900,
           title: Text(
-            'Upload Products',
+            'Thêm Sản Phẩm',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -38,16 +38,16 @@ class UploadScreen extends StatelessWidget {
           bottom: TabBar(
             tabs: [
               Tab(
-                child: Text('General'),
+                child: Text('Tổng Quan'),
+              ),
+              // Tab(
+              //   child: Text('Shipping'),
+              // ),
+              Tab(
+                child: Text('Chi Tiết'),
               ),
               Tab(
-                child: Text('Shipping'),
-              ),
-              Tab(
-                child: Text('Attribute'),
-              ),
-              Tab(
-                child: Text('Image'),
+                child: Text('Hình Ảnh'),
               ),
             ],
           ),
@@ -57,7 +57,7 @@ class UploadScreen extends StatelessWidget {
           child: TabBarView(
             children: [
               GeneralScreen(),
-              ShippingScreen(),
+              // ShippingScreen(),
               AttributesScreen(),
               ImagesScreen(),
             ],
@@ -82,10 +82,8 @@ class UploadScreen extends StatelessWidget {
                   _productProvider.productData['productQuantity'],
                   'category': _productProvider.productData['category'],
                   'description': _productProvider.productData['description'],
-                  'chargeShipping':
-                  _productProvider.productData['chargeShipping'],
-                  'shippingCharge':
-                  _productProvider.productData['shippingCharge'],
+                  // 'chargeShipping': _productProvider.productData['chargeShipping'],
+                  // 'shippingCharge': _productProvider.productData['shippingCharge'],
                   'brandName': _productProvider.productData['brandName'],
                   'sizeList': _productProvider.productData['sizeList'],
                   'productImage': _productProvider.productData['imageUrlList'],
@@ -128,7 +126,7 @@ class UploadScreen extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  'Upload Product',
+                  'THÊM SẢN PHẨM',
                   style: TextStyle(
                     color: Colors.white,
                     letterSpacing: 5,

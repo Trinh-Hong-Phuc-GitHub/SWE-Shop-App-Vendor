@@ -9,8 +9,8 @@ class ProductProvider with ChangeNotifier {
     int? productQuantity,
     String? category,
     String? description,
-    bool? chargeShipping,
-    double? shippingCharge,
+    // bool? chargeShipping,
+    // double? shippingCharge,
     String? brandName,
     List<String>? sizeList,
     List<String>? imageUrlList,
@@ -30,12 +30,12 @@ class ProductProvider with ChangeNotifier {
     if (description != null) {
       productData['description'] = description;
     }
-    if (chargeShipping != null) {
-      productData['chargeShipping'] = chargeShipping;
-    }
-    if (shippingCharge != null) {
-      productData['shippingCharge'] = shippingCharge;
-    }
+    // if (chargeShipping != null) {
+    //   productData['chargeShipping'] = chargeShipping;
+    // }
+    // if (shippingCharge != null) {
+    //   productData['shippingCharge'] = shippingCharge;
+    // }
     if (brandName != null) {
       productData['brandName'] = brandName;
     }

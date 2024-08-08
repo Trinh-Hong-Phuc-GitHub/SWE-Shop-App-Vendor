@@ -46,7 +46,7 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
               TextFormField(
                 validator: (value) {
                   if(value!.isEmpty) {
-                    return'Enter Product Name';
+                    return'Nhập tên sản phẩm';
                   } else {
                     return null;
                   }
@@ -55,8 +55,8 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
                   _productProvider.getFormData(productName: value);
                 },
                 decoration: InputDecoration(
-                  hintText: 'Enter Product Name',
-                  labelText: 'Enter Product Name',
+                  hintText: 'Nhập tên sản phẩm',
+                  labelText: 'Nhập tên sản phẩm',
                   labelStyle: TextStyle(
                     fontWeight: FontWeight.bold,
                     letterSpacing: 4,
@@ -69,7 +69,7 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
               TextFormField(
                 validator: (value) {
                   if(value!.isEmpty) {
-                    return'Enter Product Price';
+                    return'Nhập giá sản phẩm';
                   } else {
                     return null;
                   }
@@ -78,8 +78,8 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
                   _productProvider.getFormData(productPrice: double.parse(value));
                 },
                 decoration: InputDecoration(
-                  hintText: 'Enter Product Price',
-                  labelText: 'Enter Product Price',
+                  hintText: 'Nhập giá sản phẩm',
+                  labelText: 'Nhập giá sản phẩm',
                   labelStyle: TextStyle(
                     fontWeight: FontWeight.bold,
                     letterSpacing: 4,
@@ -92,7 +92,7 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
               TextFormField(
                 validator: (value) {
                   if(value!.isEmpty) {
-                    return'Enter Product Quantity';
+                    return'Nhập số lượng sản phẩm';
                   } else {
                     return null;
                   }
@@ -101,8 +101,8 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
                   _productProvider.getFormData(productQuantity: int.parse(value));
                 },
                 decoration: InputDecoration(
-                  hintText: 'Enter Product Quantity',
-                  labelText: 'Enter Product Quantity',
+                  hintText: 'Nhập số lượng sản phẩm',
+                  labelText: 'Nhập số lượng sản phẩm',
                   labelStyle: TextStyle(
                     fontWeight: FontWeight.bold,
                     letterSpacing: 4,
@@ -114,7 +114,7 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
               ),
               DropdownButtonFormField(
                 hint: Text(
-                  'Select Category',
+                  'Phân loại',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -137,7 +137,7 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
               TextFormField(
                 validator: (value) {
                   if(value!.isEmpty) {
-                    return'Enter Product Description';
+                    return'Nhập mô tả sản phẩm';
                   } else {
                     return null;
                   }
@@ -148,8 +148,8 @@ class _GeneralScreenState extends State<GeneralScreen> with AutomaticKeepAliveCl
                 maxLines: 10,
                 minLines: 3,
                 decoration: InputDecoration(
-                  hintText: 'Enter Product Description',
-                  labelText: 'Enter Product Description',
+                  hintText: 'Nhập mô tả sản phẩm',
+                  labelText: 'Nhập mô tả sản phẩm',
                 ),
               ),
               SizedBox(

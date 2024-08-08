@@ -16,7 +16,7 @@ class EarningScreen extends StatelessWidget {
         .collection('orders')
         .where('vendorId', isEqualTo: _auth.currentUser!.uid)
         .where('accepted', isEqualTo: true)
-        .where('orderStatus', isEqualTo: 'Delivered Successfully')
+        .where('orderStatus', isEqualTo: 'Giao Thành Công')
         .snapshots();
 
     return FutureBuilder<DocumentSnapshot>(
@@ -47,7 +47,7 @@ class EarningScreen extends StatelessWidget {
                     width: 10,
                   ),
                   Text(
-                    "Hi Welcome " + data['businessName'],
+                    "Xin Chào " + data['businessName'],
                     style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.w500,
@@ -72,7 +72,7 @@ class EarningScreen extends StatelessWidget {
 
                 for (var orderItem in snapshot.data!.docs) {
                   // totalOrder += orderItem['quantity'] * orderItem['price'];
-                  totalOrder += orderItem['price'];
+                  totalOrder += orderItem['totalPrice'];
 
                 }
 
@@ -91,15 +91,15 @@ class EarningScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              'Total Earning',
+                              'Tổng Tiền',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 18,
+                                fontSize: 17,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             Text(
-                              "\$" + totalOrder.toStringAsFixed(2),
+                              totalOrder.toStringAsFixed(0) + ' đ',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -123,10 +123,10 @@ class EarningScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Text(
-                              'Total Successful Order',
+                              'Đơn Hàng Thành Công',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 18,
+                                fontSize: 17,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),

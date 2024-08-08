@@ -29,7 +29,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           centerTitle: true,
           elevation: 0,
           title: Text(
-            'Manage Products',
+            'Quản Lý Sản Phẩm',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -44,7 +44,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
-                  hintText: 'Search Products...',
+                  hintText: 'Tìm kiếm sản phẩm...',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(color: Colors.grey),
@@ -60,8 +60,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
             ),
             TabBar(
               tabs: [
-                Tab(text: 'Published'),
-                Tab(text: 'Unpublished'),
+                Tab(text: 'Công Khai'),
+                Tab(text: 'Riêng Tư'),
               ],
             ),
             Expanded(

@@ -69,7 +69,7 @@ class _ChatScreenState extends State<VendorChatDetail> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Chat Screen'+ ">" + widget.productName,
+          'Chat'+ ">" + widget.productName,
           style: TextStyle(
             fontSize: 17,
             fontWeight: FontWeight.bold,
@@ -105,7 +105,7 @@ class _ChatScreenState extends State<VendorChatDetail> {
 
                     bool isBuyer = senderId == widget.buyerId;
 
-                    String senderType = isBuyer ? "Buyer" : "Seller";
+                    String senderType = isBuyer ? "khách hàng" : "cửa hàng";
 
                     bool isSellerrMessage =
                         senderId == FirebaseAuth.instance.currentUser!.uid;
@@ -123,7 +123,7 @@ class _ChatScreenState extends State<VendorChatDetail> {
                         ),
                       ),
                       title: Text(data['message']),
-                      subtitle: Text('Sent by $senderType', style: TextStyle(
+                      subtitle: Text('Được gửi bởi $senderType', style: TextStyle(
                         color: Colors.pink.shade900,
                       ),),
                     );
@@ -140,7 +140,7 @@ class _ChatScreenState extends State<VendorChatDetail> {
                   child: TextField(
                     controller: _messageController,
                     decoration: InputDecoration(
-                      hintText: 'Type a message',
+                      hintText: 'Nhập tin nhắn',
                     ),
                   ),
                 ),

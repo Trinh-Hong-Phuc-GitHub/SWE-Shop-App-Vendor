@@ -28,7 +28,7 @@ class _AttributesScreenState extends State<AttributesScreen> with AutomaticKeepA
         TextFormField(
           validator: (value) {
             if(value!.isEmpty) {
-              return'Enter Brand';
+              return'Nhập thương hiệu';
             } else {
               return null;
             }
@@ -37,7 +37,7 @@ class _AttributesScreenState extends State<AttributesScreen> with AutomaticKeepA
             _productProvider.getFormData(brandName: value);
           },
           decoration: InputDecoration(
-            labelText: 'Brand',
+            labelText: 'Thương hiệu',
             labelStyle: TextStyle(
               fontWeight: FontWeight.bold,
               letterSpacing: 4,
@@ -72,7 +72,7 @@ class _AttributesScreenState extends State<AttributesScreen> with AutomaticKeepA
                       });
                     },
                     child: Text(
-                      'Add Size',
+                      'Thêm Size',
                     ),
                   )
                 : Text(''),
@@ -127,9 +127,9 @@ class _AttributesScreenState extends State<AttributesScreen> with AutomaticKeepA
               _productProvider.getFormData(sizeList: _sizeList);
             },
             child: _isSaved
-                ? Text('Saved')
+                ? Text('Đã lưu')
                 : Text(
-                    'Save',
+                    'Lưu',
                   ),
           ),
       ],
